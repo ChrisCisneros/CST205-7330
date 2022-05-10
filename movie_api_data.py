@@ -1,4 +1,4 @@
-[
+movie_info = [
   {
     "Title": "Avatar",
     "Year": "2009",
@@ -351,7 +351,7 @@
     ]
   },
   {
-    "ComingSoon": true,
+    "ComingSoon": "true",
     "Title": "Doctor Strange",
     "Year": "2016",
     "Rated": "N/A",
@@ -379,7 +379,7 @@
     ]
   },
   {
-    "ComingSoon": true,
+    "ComingSoon": "true",
     "Title": "Rogue One: A Star Wars Story",
     "Year": "2016",
     "Rated": "N/A",
@@ -409,7 +409,7 @@
     ]
   },
   {
-    "ComingSoon": true,
+    "ComingSoon": "true",
     "Title": "Assassin's Creed",
     "Year": "2016",
     "Rated": "N/A",
@@ -438,7 +438,7 @@
     ]
   },
   {
-    "ComingSoon": true,
+    "ComingSoon": "true",
     "Title": "Luke Cage",
     "Year": "2016–",
     "Rated": "TV-MA",
