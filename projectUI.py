@@ -87,7 +87,7 @@ class ProjectUI(QWidget):
                             max_list.append((value[1], key))
         
         max_list.sort()
-        pprint(max_list)
+        # pprint(max_list)
 
         for i in max_list:
             # pprint("=" * 25 + i[1] + "\n" + "=" * 25)
