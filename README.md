@@ -1,4 +1,4 @@
-# CST205-7330
+# Class, Project, Team Members
 CST 205 project from group 7330 - Movie Manipulator
 Emran Arsala, Chris Cisneros, Ryan Pheang
 CST 205-01 SP22
