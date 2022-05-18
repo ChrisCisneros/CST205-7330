@@ -1,7 +1,7 @@
 # Class, Project, Team Members
-CST 205 project from group 7330 - Movie Manipulator
+CST 205-01 SP22 project from group 7330 - Movie Manipulator
 Emran Arsala, Chris Cisneros, Ryan Pheang
-CST 205-01 SP22
+
 
 # How to Run Program
 Running the program is very easy. You have to have all of the downloaded libraries such as pyside6, pillow, etc. Run your cst205 environment by running source cst205env/bin/activate in your command line. CD into the project CST205-7330 and finally run it by running python projectUI.py
