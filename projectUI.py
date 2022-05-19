@@ -52,12 +52,14 @@ class ProjectUI(QWidget):
         hbox1.addWidget(popularBox)
         hbox1.addWidget(ratingsLabel)
         hbox1.addWidget(ratingsBox)
+        #Top box with different sortings
 
         hbox2.addWidget(genreLabel)
         hbox2.addWidget(self.genre)
         hbox2.addWidget(self.searchBoxLineEdit)
         hbox2.addWidget(self.searchPushButton)
         hbox2.addWidget(self.resultsLabel)
+        #Bottom box with search bar and information 
 
         gbox1 = QGroupBox()
         gbox1.setLayout(hbox1)
@@ -72,6 +74,7 @@ class ProjectUI(QWidget):
 
         self.setLayout(screen)
         self.setWindowTitle('Movie Search Tool')
+        #Adds Title
         self.setGeometry(100, 100, 600, 350)
 
         
@@ -106,7 +109,7 @@ class ProjectUI(QWidget):
                 movie_dict[i['imdbID']].insert(1,i['Year'])
                 movie_dict[i['imdbID']].insert(0,0)
          
-
+#breaks apart dictionary into searchable tags
             return movie_dict
 
         
@@ -134,6 +137,7 @@ class ProjectUI(QWidget):
 
 
         get_count(movie_dict,self.searchBoxLineEdit.text().lower())
+        #Lowers text into searchable categories regardless of case
 
         for key,value in movie_dict.items():    
             for count,term in enumerate(value):
@@ -168,11 +172,14 @@ class ProjectUI(QWidget):
                     total = total + str(min) + " Min"
                     if min > 1:
                         total = total + "s "
+                #adds hours and minutes to results
                 urllib.request.urlretrieve(posterURL, "poster.jpg")
                 text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
+                #Adds poster from url as well as populating the results section
                 self.resultsLabel.setText(text)
                 img = Image.open("poster.jpg")
                 img.show()
+                #Displays image result
 
 
     @Slot()
@@ -228,7 +235,7 @@ class ProjectUI(QWidget):
                             #                          
                             value[0] += 1
                              
-                           
+        #gets the total amount of tag hits and returns                   
             return dict
 
 
