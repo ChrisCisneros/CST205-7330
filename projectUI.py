@@ -1,3 +1,7 @@
+#Team 7330
+#Team Members: Emran Arsala, Christopher Cisneros, Ryan Pheang
+#Description: This project is a small movie searching tool that uses a created dictionary with information 
+#You can search with keywords to find movies and will give you information regarding the highest hit movie
 #UI for project
 
 from PySide6.QtWidgets import *
@@ -30,6 +34,7 @@ class ProjectUI(QWidget):
         self.genre.addItems(genre_List)
         self.genre.currentIndexChanged.connect(self.onSearchButton)
         genreLabel = QLabel("Please choose a genre:")
+        #Adds genre section
 
         playingLabel = QLabel("Is Playing")
         playingBox = QCheckBox()
@@ -52,14 +57,14 @@ class ProjectUI(QWidget):
         hbox1.addWidget(popularBox)
         hbox1.addWidget(ratingsLabel)
         hbox1.addWidget(ratingsBox)
-        #Top box with different sortings
+        #Adds top box with title and categorical boxes
 
         hbox2.addWidget(genreLabel)
         hbox2.addWidget(self.genre)
         hbox2.addWidget(self.searchBoxLineEdit)
         hbox2.addWidget(self.searchPushButton)
         hbox2.addWidget(self.resultsLabel)
-        #Bottom box with search bar and information 
+        #Adds bottom box with search bar and results section
 
         gbox1 = QGroupBox()
         gbox1.setLayout(hbox1)
@@ -111,6 +116,7 @@ class ProjectUI(QWidget):
          
 #breaks apart dictionary into searchable tags
             return movie_dict
+            #splits dictionary into searchable tags
 
         
 
@@ -148,7 +154,7 @@ class ProjectUI(QWidget):
                         max_val = term
                         if(max_val > 0):
                             max_list.append(key)
-                            
+         #Seraches for terms with the max hits in the dictionary                   
 
         
 
@@ -163,7 +169,7 @@ class ProjectUI(QWidget):
 
 
                 if intTime < 60:
-                    total = intTime + "Minutes"
+                    total = intTime + "Minutes "
                 else:
                     hours, min = divmod(intTime, 60)
                     total = str(hours) + " Hour"
@@ -172,98 +178,17 @@ class ProjectUI(QWidget):
                     total = total + str(min) + " Min"
                     if min > 1:
                         total = total + "s "
-                #adds hours and minutes to results
+                #Returns runtime split into hours and minutes
                 urllib.request.urlretrieve(posterURL, "poster.jpg")
-                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
-                #Adds poster from url as well as populating the results section
+                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "  | IMDB: " + i["imdbRating"] + "\nTotal run time: " + total 
                 self.resultsLabel.setText(text)
                 img = Image.open("poster.jpg")
+                #Resturns and displays information about movie as well as a picture from the movie
                 img.show()
                 #Displays image result
 
 
-    @Slot()
-    def onSearchButton(self):
-        movie_dict = {}    
-        max_list = []
-        max_val = 0
-
-      # def preprocess(movie_info):
-#     for i in movie_info:
-#         movieDict[i["imdbID"]] = []
-
-
-        def preprocess(movie_info):
-
-           
-
-            for i in movie_info:
-                movie_dict[i["imdbID"]] = []
-
-                for j in i['Title'].split():
-                     movie_dict[i['imdbID']].append(j.rstrip(',').lower())
-                
-                for j in i['Actors'].split():
-                    movie_dict[i['imdbID']].append(j.rstrip(',').lower())
-                
-                for j in i['Genre'].split():
-                    movie_dict[i['imdbID']].append(j.rstrip(',').lower())
-            
-                movie_dict[i['imdbID']].insert(1,i['Year'])
-                movie_dict[i['imdbID']].insert(0,0)
-         
-
-            return movie_dict
-
-        
-
-        
-        preprocess(movie_info)
-      
-
-        selection  = self.genre.currentText()
-
-
-        def get_count(dict,search):
-            for key,value in dict.items():
-                if selection in value:
-                    value[0] += 1
-                for count,term in enumerate(value):
-                    if count >= 1:
-                      
-                        if term in search:
-                            #                          
-                            value[0] += 1
-                             
-        #gets the total amount of tag hits and returns                   
-            return dict
-
-
-        get_count(movie_dict,self.searchBoxLineEdit.text())
-
-        for key,value in movie_dict.items():    
-            for count,term in enumerate(value):
-                if count == 0:
-                    if term >= max_val:
-                        if term > max_val and len(max_list) > 0:                 
-                            del max_list[:len(max_list)]
-                        max_val = term
-                        if(max_val > 0):
-                            max_list.append(key)
-                            
-
-        
-
-        
-
-        for i in movie_info:
-            if(i['imdbID']) == max_list[0]:
-                posterURL = i["Images"][0]
-                urllib.request.urlretrieve(posterURL, "poster.jpg")
-                img = Image.open("poster.jpg")
-                img.show()
-                
-               
+  
     
         
 
