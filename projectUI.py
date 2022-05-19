@@ -1,3 +1,7 @@
+#Team 7330
+#Team Members: Emran Arsala, Christopher Cisneros, Ryan Pheang
+#Description: This project is a small movie searching tool that uses a created dictionary with information 
+#You can search with keywords to find movies and will give you information regarding the highest hit movie
 #UI for project
 
 from PySide6.QtWidgets import *
@@ -30,6 +34,7 @@ class ProjectUI(QWidget):
         self.genre.addItems(genre_List)
         self.genre.currentIndexChanged.connect(self.onSearchButton)
         genreLabel = QLabel("Please choose a genre:")
+        #Adds genre section
 
         playingLabel = QLabel("Is Playing")
         playingBox = QCheckBox()
@@ -52,12 +57,14 @@ class ProjectUI(QWidget):
         hbox1.addWidget(popularBox)
         hbox1.addWidget(ratingsLabel)
         hbox1.addWidget(ratingsBox)
+        #Adds top box with title and categorical boxes
 
         hbox2.addWidget(genreLabel)
         hbox2.addWidget(self.genre)
         hbox2.addWidget(self.searchBoxLineEdit)
         hbox2.addWidget(self.searchPushButton)
         hbox2.addWidget(self.resultsLabel)
+        #Adds bottom box with search bar and results section
 
         gbox1 = QGroupBox()
         gbox1.setLayout(hbox1)
@@ -108,6 +115,7 @@ class ProjectUI(QWidget):
          
 
             return movie_dict
+            #splits dictionary into searchable tags
 
         
 
@@ -144,7 +152,7 @@ class ProjectUI(QWidget):
                         max_val = term
                         if(max_val > 0):
                             max_list.append(key)
-                            
+         #Seraches for terms with the max hits in the dictionary                   
 
         
 
@@ -159,7 +167,7 @@ class ProjectUI(QWidget):
 
 
                 if intTime < 60:
-                    total = intTime + "Minutes"
+                    total = intTime + "Minutes "
                 else:
                     hours, min = divmod(intTime, 60)
                     total = str(hours) + " Hour"
@@ -168,10 +176,12 @@ class ProjectUI(QWidget):
                     total = total + str(min) + " Min"
                     if min > 1:
                         total = total + "s "
+                #Returns runtime split into hours and minutes
                 urllib.request.urlretrieve(posterURL, "poster.jpg")
-                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
+                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "  | IMDB: " + i["imdbRating"] + "\nTotal run time: " + total 
                 self.resultsLabel.setText(text)
                 img = Image.open("poster.jpg")
+                #Resturns and displays information about movie as well as a picture from the movie
                 img.show()
 
 
