@@ -1,6 +1,7 @@
 #UI for project
 
 from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 from PySide6.QtCore import Slot
 from PIL import Image
 import urllib.request
@@ -9,6 +10,7 @@ from movie_api_data import movie_info
 import sys
 import requests
 from io import BytesIO
+import os
 
 movieDict = {}
 
@@ -37,7 +39,10 @@ class ProjectUI(QWidget):
 
         ratingsLabel = QLabel("Ratings")
         ratingsBox = QCheckBox()
-        
+
+        self.resultsLabel = QLabel("")
+        welcomeLabel = QLabel("Movie Search Tool")
+        welcomeLabel.setFont(QFont('Arial', 25))
         hbox1 = QHBoxLayout()
         hbox2 = QVBoxLayout()
 
@@ -52,6 +57,7 @@ class ProjectUI(QWidget):
         hbox2.addWidget(self.genre)
         hbox2.addWidget(self.searchBoxLineEdit)
         hbox2.addWidget(self.searchPushButton)
+        hbox2.addWidget(self.resultsLabel)
 
         gbox1 = QGroupBox()
         gbox1.setLayout(hbox1)
@@ -60,12 +66,15 @@ class ProjectUI(QWidget):
         gbox2.setLayout(hbox2)
 
         screen = QVBoxLayout()
+        screen.addWidget(welcomeLabel)
         screen.addWidget(gbox1)
         screen.addWidget(gbox2)
 
         self.setLayout(screen)
         self.setWindowTitle('Movie Search Tool')
-        self.setGeometry(100, 100, 500, 500)
+        self.setGeometry(100, 100, 600, 350)
+
+        
 
     @Slot()
     def onSearchButton(self):
@@ -76,7 +85,7 @@ class ProjectUI(QWidget):
       # def preprocess(movie_info):
 #     for i in movie_info:
 #         movieDict[i["imdbID"]] = []
-
+    
 
         def preprocess(movie_info):
 
@@ -124,7 +133,7 @@ class ProjectUI(QWidget):
             return dict
 
 
-        get_count(movie_dict,self.searchBoxLineEdit.text())
+        get_count(movie_dict,self.searchBoxLineEdit.text().lower())
 
         for key,value in movie_dict.items():    
             for count,term in enumerate(value):
@@ -144,15 +153,27 @@ class ProjectUI(QWidget):
         for i in movie_info:
             if(i['imdbID']) == max_list[0]:
                 posterURL = i["Images"][0]
+                initial = i["Runtime"].split()
+                time = initial[0]
+                intTime = int(time)
+
+
+                if intTime < 60:
+                    total = intTime + "Minutes"
+                else:
+                    hours, min = divmod(intTime, 60)
+                    total = str(hours) + " Hour"
+                    if hours > 1:
+                        total = total + "s "
+                    total = total + str(min) + " Min"
+                    if min > 1:
+                        total = total + "s "
                 urllib.request.urlretrieve(posterURL, "poster.jpg")
+                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
+                self.resultsLabel.setText(text)
                 img = Image.open("poster.jpg")
                 img.show()
-                
-               
-    
-        
 
-    
 
 app = QApplication([])
 myScreen = ProjectUI()
