@@ -1,5 +1,6 @@
 #Team 7330
 #Team Members: Emran Arsala, Christopher Cisneros, Ryan Pheang
+#Date 5/19/2022
 #Description: This project is a small movie searching tool that uses a created dictionary with information 
 #You can search with keywords to find movies and will give you information regarding the highest hit movie
 #UI for project
