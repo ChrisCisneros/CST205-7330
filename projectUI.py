@@ -52,12 +52,14 @@ class ProjectUI(QWidget):
         hbox1.addWidget(popularBox)
         hbox1.addWidget(ratingsLabel)
         hbox1.addWidget(ratingsBox)
+        #Top box with different sortings
 
         hbox2.addWidget(genreLabel)
         hbox2.addWidget(self.genre)
         hbox2.addWidget(self.searchBoxLineEdit)
         hbox2.addWidget(self.searchPushButton)
         hbox2.addWidget(self.resultsLabel)
+        #Bottom box with search bar and information 
 
         gbox1 = QGroupBox()
         gbox1.setLayout(hbox1)
@@ -72,6 +74,7 @@ class ProjectUI(QWidget):
 
         self.setLayout(screen)
         self.setWindowTitle('Movie Search Tool')
+        #Adds Title
         self.setGeometry(100, 100, 600, 350)
 
         
@@ -86,6 +89,109 @@ class ProjectUI(QWidget):
 #     for i in movie_info:
 #         movieDict[i["imdbID"]] = []
     
+
+        def preprocess(movie_info):
+
+           
+
+            for i in movie_info:
+                movie_dict[i["imdbID"]] = []
+
+                for j in i['Title'].split():
+                     movie_dict[i['imdbID']].append(j.rstrip(',').lower())
+                
+                for j in i['Actors'].split():
+                    movie_dict[i['imdbID']].append(j.rstrip(',').lower())
+                
+                for j in i['Genre'].split():
+                    movie_dict[i['imdbID']].append(j.rstrip(',').lower())
+            
+                movie_dict[i['imdbID']].insert(1,i['Year'])
+                movie_dict[i['imdbID']].insert(0,0)
+         
+#breaks apart dictionary into searchable tags
+            return movie_dict
+
+        
+
+        
+        preprocess(movie_info)
+      
+
+        selection  = self.genre.currentText()
+
+
+        def get_count(dict,search):
+            for key,value in dict.items():
+                if selection in value:
+                    value[0] += 1
+                for count,term in enumerate(value):
+                    if count >= 1:
+                      
+                        if term in search:
+                            #                          
+                            value[0] += 1
+                             
+                           
+            return dict
+
+
+        get_count(movie_dict,self.searchBoxLineEdit.text().lower())
+        #Lowers text into searchable categories regardless of case
+
+        for key,value in movie_dict.items():    
+            for count,term in enumerate(value):
+                if count == 0:
+                    if term >= max_val:
+                        if term > max_val and len(max_list) > 0:                 
+                            del max_list[:len(max_list)]
+                        max_val = term
+                        if(max_val > 0):
+                            max_list.append(key)
+                            
+
+        
+
+        
+
+        for i in movie_info:
+            if(i['imdbID']) == max_list[0]:
+                posterURL = i["Images"][0]
+                initial = i["Runtime"].split()
+                time = initial[0]
+                intTime = int(time)
+
+
+                if intTime < 60:
+                    total = intTime + "Minutes"
+                else:
+                    hours, min = divmod(intTime, 60)
+                    total = str(hours) + " Hour"
+                    if hours > 1:
+                        total = total + "s "
+                    total = total + str(min) + " Min"
+                    if min > 1:
+                        total = total + "s "
+                #adds hours and minutes to results
+                urllib.request.urlretrieve(posterURL, "poster.jpg")
+                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
+                #Adds poster from url as well as populating the results section
+                self.resultsLabel.setText(text)
+                img = Image.open("poster.jpg")
+                img.show()
+                #Displays image result
+
+
+    @Slot()
+    def onSearchButton(self):
+        movie_dict = {}    
+        max_list = []
+        max_val = 0
+
+      # def preprocess(movie_info):
+#     for i in movie_info:
+#         movieDict[i["imdbID"]] = []
+
 
         def preprocess(movie_info):
 
@@ -129,11 +235,11 @@ class ProjectUI(QWidget):
                             #                          
                             value[0] += 1
                              
-                           
+        #gets the total amount of tag hits and returns                   
             return dict
 
 
-        get_count(movie_dict,self.searchBoxLineEdit.text().lower())
+        get_count(movie_dict,self.searchBoxLineEdit.text())
 
         for key,value in movie_dict.items():    
             for count,term in enumerate(value):
@@ -153,27 +259,15 @@ class ProjectUI(QWidget):
         for i in movie_info:
             if(i['imdbID']) == max_list[0]:
                 posterURL = i["Images"][0]
-                initial = i["Runtime"].split()
-                time = initial[0]
-                intTime = int(time)
-
-
-                if intTime < 60:
-                    total = intTime + "Minutes"
-                else:
-                    hours, min = divmod(intTime, 60)
-                    total = str(hours) + " Hour"
-                    if hours > 1:
-                        total = total + "s "
-                    total = total + str(min) + " Min"
-                    if min > 1:
-                        total = total + "s "
                 urllib.request.urlretrieve(posterURL, "poster.jpg")
-                text = "Title: " + i["Title"] + "\nRated " + i["Rated"] +"\nPlot: " + i["Plot"] + "\nScores Meta Score: " + i["Metascore"] + "/100  | IMDB: " + i["imdbRating"] + "/10\nTotal run time: " + total 
-                self.resultsLabel.setText(text)
                 img = Image.open("poster.jpg")
                 img.show()
+                
+               
+    
+        
 
+    
 
 app = QApplication([])
 myScreen = ProjectUI()
