@@ -351,12 +351,12 @@ movie_info = [
     ]
   },
   {
-    "ComingSoon": "true",
+    "ComingSoon": True,
     "Title": "Doctor Strange",
     "Year": "2016",
     "Rated": "N/A",
     "Released": "04 Nov 2016",
-    "Runtime": "N/A",
+    "Runtime": "115 min",
     "Genre": "Action, Adventure, Fantasy",
     "Director": "Scott Derrickson",
     "Writer": "Scott Derrickson (screenplay), C. Robert Cargill (screenplay), Jon Spaihts (story by), Scott Derrickson (story by), C. Robert Cargill (story by), Steve Ditko (comic book)",
@@ -379,12 +379,12 @@ movie_info = [
     ]
   },
   {
-    "ComingSoon": "true",
+    "ComingSoon": True,
     "Title": "Rogue One: A Star Wars Story",
     "Year": "2016",
     "Rated": "N/A",
     "Released": "16 Dec 2016",
-    "Runtime": "N/A",
+    "Runtime": "133 min",
     "Genre": "Action, Adventure, Sci-Fi",
     "Director": "Gareth Edwards",
     "Writer": "Chris Weitz (screenplay), Tony Gilroy (screenplay), John Knoll (story), Gary Whitta (story), George Lucas (characters)",
@@ -409,12 +409,12 @@ movie_info = [
     ]
   },
   {
-    "ComingSoon": "true",
+    "ComingSoon": True,
     "Title": "Assassin's Creed",
     "Year": "2016",
     "Rated": "N/A",
     "Released": "21 Dec 2016",
-    "Runtime": "N/A",
+    "Runtime": "115",
     "Genre": "Action, Adventure, Fantasy",
     "Director": "Justin Kurzel",
     "Writer": "Bill Collage (screenplay), Adam Cooper (screenplay), Michael Lesslie (screenplay)",
@@ -438,7 +438,7 @@ movie_info = [
     ]
   },
   {
-    "ComingSoon": "true",
+    "ComingSoon": True,
     "Title": "Luke Cage",
     "Year": "2016–",
     "Rated": "TV-MA",
